@@ -22,9 +22,13 @@ module.exports = {
         allowNull: false,
         defaultValue: 1
       },
-      company_name: {
+      company_id: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      location_id:{
+        type: DataTypes.Integer,
+        defaultValue: "VR1-99"
       },
       created_at: {
         allowNull: false,

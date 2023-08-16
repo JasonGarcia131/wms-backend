@@ -9,9 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({Company}) {
+    static associate({Company, Location}) {
       // define association here
       this.belongsTo(Company)
+      this.belongsTo(Location)
     }
   }
   UccBarcode.init({
@@ -36,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
     company_id: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    location_id:{
+      type: DataTypes.Integer,
+      defaultValue: "VR1-99"
     },
     created_at: {
       allowNull: false,

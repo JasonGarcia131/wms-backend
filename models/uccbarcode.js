@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   UccBarcode.init({
     barcode_id: {
-      type: DataTypes.Integer,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     location_id:{
-      type: DataTypes.Integer,
+      type: DataTypes.INTEGER,
       defaultValue: "VR1-99"
     },
     created_at: {

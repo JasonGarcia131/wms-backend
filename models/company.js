@@ -9,8 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(model) {
-      // define association here
+    static associate({SalesOrder}) {
+      this.hasMany(SalesOrder, {
+        foreignKey: 'company_id'
+      });
     }
   }
   Company.init({
@@ -23,21 +25,13 @@ module.exports = (sequelize, DataTypes) => {
     company_name: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    created_at: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updated_at: {
-      allowNull: false,
-      type: DataTypes.DATE
     }
   }, {
     sequelize,
     modelName: 'Company',
     tableName: 'companies',
     underscored: true,
-    timestamps: true
+    timestamps: false
   });
   return Company;
 };

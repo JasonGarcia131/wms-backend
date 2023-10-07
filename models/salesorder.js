@@ -9,10 +9,16 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({Company}) {
+    static associate({Company, Customer}) {
       // define association here
-      this.belongsTo(Company)
+      this.belongsTo(Company, {
+        foreignKey: 'company_id'
+      });
+      this.belongsTo(Customer, {
+        foreignKey: "customer_id"
+      });
     }
+
   }
   SalesOrder.init({
     salesorder_id: {
@@ -20,10 +26,6 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
       allowNull: false
-    },
-    sales_rep: {
-      type: DataTypes.STRING,
-      allowNull: true
     },
     ship_date:{ 
       type: DataTypes.DATE,
@@ -38,27 +40,23 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: Date.now()
     },
+    ship_to: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     company_id: {
       type: DataTypes.INTEGER,
     },
     customer_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    },
-    created_at: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updated_at: {
-      allowNull: false,
-      type: DataTypes.DATE
     }
   }, {
     sequelize,
     modelName: 'SalesOrder',
-    tableName: 'salesorders',
+    tableName: 'salesOrders',
     underscored: true,
-    timestamps: true
+    timestamps: false
   });
   return SalesOrder;
 };

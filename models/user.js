@@ -27,20 +27,13 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    created_at: {
-      allowNull: false,
-      type: Sequelize.DATE
-    },
-    updated_at: {
-      allowNull: false,
-      type: Sequelize.DATE
     }
   }, {
     sequelize,
     modelName: 'User',
     tableName: 'users',
-    underscored: true
+    underscored: true,
+    timestamps: false
   });
   return User;
 };

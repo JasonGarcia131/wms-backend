@@ -16,6 +16,8 @@ app.use('/user', require('./routes/user'));
 app.use('/salesorder', require('./routes/salesOrders'));
 app.use('/company', require('./routes/company'));
 app.use('/customer', require('./routes/customer'));
+app.use('/inventory', require('./routes/inventory'));
+app.use('/barcode', require('./routes/uccbarcode'));
 
 app.listen(PORT, ()=>{
     console.log(`Listening on port: ${PORT}`);

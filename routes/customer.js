@@ -6,9 +6,9 @@ router.route('/')
     .get(customerController.getAllCustomers)
     .post(customerController.postCustomer)
 
-// router.route('/:user_id')
-//     .get(company.getUserById)
-//     .put(company.updateUser)
-//     .delete(company.deleteUser)
+router.route('/:customer_id')
+    .get(customerController.getCustomerById)
+    .put(customerController.updateCustomer)
+    .delete(customerController.deleteCustomer)
 
 module.exports = router;

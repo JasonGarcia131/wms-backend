@@ -3,25 +3,23 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class UccBarcode extends Model {
+  class OrderDetail extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({Company, Location}) {
+    static associate({SalesOrder}) {
       // define association here
-      this.belongsTo(Company, {
-        foreignKey: 'company_id',
-        as: 'company'
-      })
+      this.belongsTo(SalesOrder, {
+        foreignKey: 'salesorder_id'
+      });
     }
   }
-  UccBarcode.init({
-    barcode_id: {
+  OrderDetail.init({
+    order_details_id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
+      primaryKey: true
     },
     sku_number: {
       type: DataTypes.STRING,
@@ -29,28 +27,22 @@ module.exports = (sequelize, DataTypes) => {
     },
     color: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false
     },
     quantity: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 1
-    },
-    company_id: {
-      type: DataTypes.STRING,
       allowNull: false
     },
-    location_id:{
-      type: DataTypes.STRING,
-      defaultValue: "VR1-99"
+    salesorder_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
   }, {
     sequelize,
-    modelName: 'UccBarcode',
-    tableName: 'UccBarcodes',
+    modelName: 'OrderDetail',
+    tableName: 'orderDetails',
     underscored: true,
-    timestamps: false,
-    alter: true
+    timestamps: false
   });
-  return UccBarcode;
+  return OrderDetail;
 };

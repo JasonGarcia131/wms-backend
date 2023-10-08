@@ -44,7 +44,7 @@ const updateUser = async (req, res) => {
         name: name || foundUser.name,
         password: password || foundUser.password
     });
-    
+
     if(!updatedUser) return res.status(400).send("Cannot update user");
     res.status(204).json({
         status: "success",
@@ -59,4 +59,4 @@ const deleteUser = async (req, res) => {
     if(deletedUser) res.status(204).send("user deleted");
 }
 
-module.exports = {getAllUsers, postUser, getUserById, updateUser, deleteUser};
+module.exports = {getAllUsers, getUserById, postUser, updateUser, deleteUser};

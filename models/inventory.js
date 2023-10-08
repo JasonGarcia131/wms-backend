@@ -41,21 +41,13 @@ module.exports = (sequelize, DataTypes) => {
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false
-    },
-    created_at: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updated_at: {
-      allowNull: false,
-      type: DataTypes.DATE
     }
   }, {
     sequelize,
     modelName: 'Inventory',
     tableName: 'inventories',
     underscored: true,
-    timestamps: true
+    timestamps: false
   });
   return Inventory;
 };

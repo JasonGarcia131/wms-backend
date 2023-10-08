@@ -6,9 +6,9 @@ router.route('/')
     .get(companyController.getAllCompanies)
     .post(companyController.postCompany)
 
-// router.route('/:user_id')
-//     .get(company.getUserById)
-//     .put(company.updateUser)
-//     .delete(company.deleteUser)
+    router.route('/:company_id')
+    .get(companyController.getCompanyById)
+    .put(companyController.updateCompany)
+    .delete(companyController.deleteCompany)
 
 module.exports = router;

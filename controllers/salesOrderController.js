@@ -1,4 +1,4 @@
-const {SalesOrder} = require("../models/index");
+const {SalesOrder, Company, Customer} = require("../models/index");
 
 const getAllSalesOrders = async(req, res) => {
     const salesOrders = await SalesOrder.findAll();
@@ -10,7 +10,6 @@ const getAllSalesOrders = async(req, res) => {
 }
 
 const postSalesOrder = async (req, res) => {
-    console.log("route hit")
     const {salesorder_id, ship_date, ship_via, company_id, customer_id, ship_to} = req.body;
     if(!salesorder_id) return res.status(400).json({message: "empty values"});
     const response = await SalesOrder.create({salesorder_id, ship_date, ship_via, company_id, customer_id, ship_to});
@@ -18,44 +17,55 @@ const postSalesOrder = async (req, res) => {
     res.status(201).send(response);
 }
 
-// const getUserById = async(req, res) => {
-//     console.log("req", req.params)
-//     const {user_id} = req.params;
-//     console.log("user id", user_id)
-//     if(!user_id) return res.status(400).send("empty value")
-//     const user = await User.findOne({where: {user_id}});
-//     if(!user) return res.status(404).send("no user found");
-//     res.status(200).json({
-//         status: "success",
-//         user
-//     })
-// }
+const getSalesOrderById = async(req, res) => {
+    const {salesorder_id} = req.params;
+    if(!salesorder_id) return res.status(400).send("empty value")
+    const salesorder = await SalesOrder.findOne({
+        where: {salesorder_id},
+        include: [
+         {
+            model: Company,
+         },
+         {
+            model: Customer
+         }
+        ], 
+    }
+        );
+    if(!salesorder) return res.status(404).send("no salesorder found");
+    console.log(salesorder)
+    res.status(200).json({
+        status: "success",
+        salesorder
+    })
+}
 
-// const updateUser = async (req, res) => {
-//     const {user_id} = req.params;
-//     const {name, password} = req.body;
+const updateSalesOrder = async (req, res) => {
+    const {salesorder_id} = req.params;
+    const {ship_date, ship_via, company_id, customer_id, ship_to} = req.body;
 
-//     const foundUser = await User.findOne({where: {user_id}});
-//     if(!foundUser) return res.status(404).send("No user found");
-//     foundUser.password = password || foundUser.password;
-//     foundUser.name = name || foundUser.name;
-//     const updatedUser = await foundUser.update({
-//         name: name || foundUser.name,
-//         password: password || foundUser.password
-//     });
+    const foundSalesOrder = await SalesOrder.findOne({where: {salesorder_id}});
+    if(!foundSalesOrder) return res.status(404).send("No sales order found");
+    const updatedSalesOrder = await foundSalesOrder.update({
+        ship_date: ship_date || foundSalesOrder.ship_date,
+        ship_via: ship_via || foundSalesOrder.ship_via,
+        ship_to: ship_to || foundSalesOrder.ship_to,
+        company_id: company_id || foundSalesOrder.company_id,
+        customer_id: customer_id || foundSalesOrder.customer_id
+    });
     
-//     if(!updatedUser) return res.status(400).send("Cannot update user");
-//     res.status(204).json({
-//         status: "success",
-//         updatedUser
-//     });
-// }
+    if(!updatedSalesOrder) return res.status(400).send("Cannot update sales order");
+    res.status(204).json({
+        status: "success",
+        updatedSalesOrder
+    });
+}
 
-// const deleteUser = async (req, res) => {
-//     const {user_id} = req.params;
-//     if(!user_id) res.status(400).send("empty value");
-//     const deletedUser = await User.destroy({where: {user_id}});
-//     if(deletedUser) res.status(204).send("user deleted");
-// }
+const deleteSalesOrder = async (req, res) => {
+    const {salesorder_id} = req.params;
+    if(!salesorder_id) res.status(400).send("empty value");
+    const deletedSalesOrder = await SalesOrder.destroy({where: {salesorder_id}});
+    if(deletedSalesOrder) res.status(204).send("sales order deleted");
+}
 
-module.exports = {getAllSalesOrders, postSalesOrder};
+module.exports = {getAllSalesOrders, getSalesOrderById, postSalesOrder, updateSalesOrder, deleteSalesOrder};
